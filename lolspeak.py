@@ -13,9 +13,13 @@ def translate(s):
     output = []
     for word in words:
         title = True if word.title() == word else False
-        m = re.match(r"(\W*)([\w']+)(\W*)", word)
-        print m.groups()
-        preceeding, just_word, trailing = m.groups()
+        try:
+            print word
+            m = re.match(r"(\W*)([\w']+)(\W*)", word)
+            print m.groups()
+            preceeding, just_word, trailing = m.groups()
+        except:
+            return word
         lower = just_word.lower()
         if lower in English2Lol:
             output_part = English2Lol[lower]
@@ -23,11 +27,12 @@ def translate(s):
             output_part = lower
         if title:
             output_part = output_part.title()
-        output.append(preceeding + output_part)
-    return ' '.join(output)
+        output.append(preceeding + output_part + trailing)
+    return ' '.join([o.upper() for o in output if o])
 
 if __name__ == '__main__':
     if len(sys.argv) > 1:
         print translate(' '.join(sys.argv[1:]))
     else:
         print translate(u"Someone's cat likes to eat bananas!")
+        print translate(u"u rly got a hold on me (us Stereo Mix)")

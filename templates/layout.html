@@ -1,0 +1,29 @@
+<!doctype html>
+<html>
+<head>
+  <title>Business See</title>
+  <style type="text/css">
+	  body{
+		  color: green;
+		  background: #a0b0c0;
+		  padding-left: 5em;
+	  }
+	  h1{
+		color: #243233;
+		margin-top: 1em;
+		margin-bottom: 1em;
+	  }
+  </style>
+</head>
+<body>
+  <div class=metanav>
+  </div>
+
+  {% for message in get_flashed_messages() %}
+  <div class="metanav flash-top">{{ message }}</div>
+  {% endfor %}
+
+  {% block body %}
+  {% endblock %}
+</body>
+</html>

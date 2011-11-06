@@ -29,7 +29,9 @@ def aboutpage():
     return render_template('frontpage.html')
 
 @app.route('/lolartist/<artist_name>')
-def lolartist(artist_name):
+def lolartist(artist_name, retries=1):
+    if retries > 3:
+        return render_template('try_another.html')
     try:
         song_titles = nest.songstest(artist_name)
         fname = nest.pictest(artist_name)
@@ -40,6 +42,8 @@ def lolartist(artist_name):
         return response
     except EchoNestAPIError:
         return render_template('try_another.html')
+    except IOError:
+        return lolartist(artist_name, retries=retries+1)
 
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))

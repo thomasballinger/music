@@ -23,13 +23,13 @@ import re
 from os import chdir, path
 import os
 
-def txt2img(image, text=None, show=False, bg="#ffffff", fg="#000000",  font_size=15):
+def txt2img(image, text=None, show=False, bg="#ffffff", fg="#000000",  font_size=20):
     if not text:
         text = ['test text']
     font_dir = "/usr/share/fonts/truetype/freefont/"
     font="FreeSansBold.ttf"
     fnt = ImageFont.truetype(font_dir+font, font_size)
-    lineWidth = 20
+    lineWidth = 25
     img = Image.open(image)
     draw = ImageDraw.Draw(img)                     # setup to draw on the main image
     for i, line in enumerate(text):

@@ -19,6 +19,7 @@ import caption
 import lolspeak
 import nest
 
+MAX_RETRIES = 3
 
 app = Flask(__name__)
 app.config['DEBUG'] = True
@@ -30,7 +31,7 @@ def aboutpage():
 
 @app.route('/lolartist/<artist_name>')
 def lolartist(artist_name, retries=1):
-    if retries > 3:
+    if retries > MAX_RETRIES:
         return render_template('try_another.html')
     try:
         song_titles = nest.songstest(artist_name)

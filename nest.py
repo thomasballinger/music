@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+"""lib for """
 
 import re
 import urllib
@@ -12,7 +13,7 @@ from pyechonest import artist
 import lolspeak
 import caption
 
-def songstest(name):
+def get_songs(name):
     a = artist.Artist(name)
     songs = a.get_songs()
     titles = [s.title for s in songs]
@@ -21,7 +22,7 @@ def songstest(name):
     print [len(s) for s in titles]
     return [lolspeak.translate(s) for s in titles]
 
-def pictest(name):
+def get_pic(name):
     a = artist.Artist(name)
     pics = a.get_images()
     url = random.choice(pics)['url']
@@ -41,6 +42,6 @@ if __name__ == '__main__':
         name = ' '.join(sys.argv[1:])
     else:
         name = 'cascada'
-    string = songstest(name)
-    fname = pictest(name)
+    string = get_songs(name)
+    fname = get_pic(name)
     caption.txt2img(fname, string)

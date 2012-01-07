@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""Yay"""
+"""Basic captioning"""
 
 # based on code at 
 # http://www.linuxquestions.org/questions/programming-9/python-can-you-add-text-to-an-image-in-python-632773/
@@ -23,7 +23,8 @@ import re
 from os import chdir, path
 import os
 
-def txt2img(image, text=None, show=False, bg="#ffffff", fg="#000000",  font_size=20):
+def pasteTextOntoImage(image, text=None, show=False, bg="#ffffff", fg="#000000",  font_size=20):
+    """Puts a caption on an image, returning the resultant image file"""
     if not text:
         text = ['test text']
     font_dir = "/usr/share/fonts/truetype/freefont/"

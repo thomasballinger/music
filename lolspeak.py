@@ -1,22 +1,22 @@
+#!/usr/bin/env python
+"""Lolcat translator, requires lolcat.yaml file"""
 import yaml
 import sys
 import re
 
 English2Lol = yaml.load(open('tranzlator.yml'))
+
+# some monkeypatching for good luck
 English2Lol['someone\'s'] = 'some1\'s'
-print English2Lol['a'].__repr__()
 
 def translate(s):
-    """Super-basic translator"""
-    print s
+    """Super-basic english to lolcat translator"""
     words = s.split()
     output = []
     for word in words:
         title = True if word.title() == word else False
         try:
-            print word
             m = re.match(r"(\W*)([\w']+)(\W*)", word)
-            print m.groups()
             preceeding, just_word, trailing = m.groups()
         except:
             return word
@@ -35,4 +35,4 @@ if __name__ == '__main__':
         print translate(' '.join(sys.argv[1:]))
     else:
         print translate(u"Someone's cat likes to eat bananas!")
-        print translate(u"u rly got a hold on me (us Stereo Mix)")
+        print translate(u"You really got a hold on me (US Stereo Mix)")

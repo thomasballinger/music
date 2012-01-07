@@ -19,7 +19,7 @@ import caption
 import lolspeak
 import nest
 
-MAX_RETRIES = 3
+MAX_RETRIES = 2
 
 app = Flask(__name__)
 app.config['DEBUG'] = True
@@ -30,13 +30,13 @@ def aboutpage():
     return render_template('frontpage.html')
 
 @app.route('/lolartist/<artist_name>')
-def lolartist(artist_name, retries=1):
-    if retries > MAX_RETRIES:
+def lolartist(artist_name, attempt_number=1):
+    if attempt_number > MAX_RETRIES + 1:
         return render_template('try_another.html')
     try:
-        song_titles = nest.songstest(artist_name)
-        fname = nest.pictest(artist_name)
-        fobj = caption.txt2img(fname, song_titles)
+        song_titles = nest.get_songs(artist_name)
+        fname = nest.get_pic(artist_name)
+        fobj = caption.pasteTextOntoImage(fname, song_titles)
         response = make_response(fobj.read())
         response.headers['Content-Type'] = 'image/jpeg'
         #response.headers['Content-Disposition'] = 'attachment; filename=kitteh.jpg'
@@ -44,7 +44,7 @@ def lolartist(artist_name, retries=1):
     except EchoNestAPIError:
         return render_template('try_another.html')
     except IOError:
-        return lolartist(artist_name, retries=retries+1)
+        return lolartist(artist_name, attempt_number = attempt_number + 1)
 
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))
